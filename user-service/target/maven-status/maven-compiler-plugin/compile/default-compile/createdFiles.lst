@@ -1,0 +1,5 @@
+com\ecommerce\user\mapper\UserMapper.class
+com\ecommerce\user\service\impl\UserServiceImpl.class
+com\ecommerce\user\service\UserService.class
+com\ecommerce\user\controller\UserController.class
+com\ecommerce\user\UserServiceApplication.class
