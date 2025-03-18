@@ -26,14 +26,20 @@ public class OrderMessageListener implements RocketMQListener<Order> {
         transactionLogRepository.save(prepareLog);
 
         try {
-            // 阶段一：准备阶段
+            // 阶段一：准备阶段（订单信息校验、库存预扣减）
+            // 1.校验订单基本信息有效性
+            // 2.调用库存服务预扣减库存
+            // 3.生成预占用的优惠券记录
             boolean prepared = orderService.prepareTransaction(order);
             if (!prepared) {
                 handleRollback(txId, order);
                 return;
             }
 
-            // 阶段二：预提交阶段
+            // 阶段二：预提交阶段（支付预授权、物流预分配）
+            // 1.调用支付服务进行预授权
+            // 2.调用物流服务分配运单号
+            // 3.生成预占用的积分记录
             TransactionLog preCommitLog = new TransactionLog(txId, TransactionStatus.COMMIT, order.getId());
             transactionLogRepository.save(preCommitLog);
             if (!orderService.preCommitTransaction(order)) {
@@ -41,7 +47,10 @@ public class OrderMessageListener implements RocketMQListener<Order> {
                 return;
             }
 
-            // 阶段三：提交阶段
+            // 阶段三：提交阶段（正式扣减库存、生成物流单）
+            // 1.正式扣减商品库存
+            // 2.生成正式物流单
+            // 3.更新优惠券/积分使用状态
             orderService.commitTransaction(order);
             transactionLogRepository.save(new TransactionLog(txId, TransactionStatus.COMMIT, order.getId()));
 
@@ -50,5 +59,5 @@ public class OrderMessageListener implements RocketMQListener<Order> {
         } finally {
             scheduleTimeoutCheck(txId, order);
         }
-     }
+    }
 }
