@@ -9,6 +9,10 @@ spring:
       discovery:
         server-addr: localhost:8848
         namespace: 78c9769d-aba0-486b-8876-862032f00cb7
+    loadbalancer:
+      configurations: round-robin
+      cache:
+        enabled: true
       config:
         server-addr: localhost:8848
         namespace: 78c9769d-aba0-486b-8876-862032f00cb7

@@ -1,3 +1,4 @@
+com\ecommerce\user\config\RestTemplateConfig.class
 com\ecommerce\user\mapper\UserMapper.class
 com\ecommerce\user\service\impl\UserServiceImpl.class
 com\ecommerce\user\service\UserService.class

@@ -1,0 +1,6 @@
+rocketmq:
+  name-server: 阿里云RocketMQ实例地址
+  producer:
+    group: order-producer-group
+  consumer:
+    group: order-consumer-group

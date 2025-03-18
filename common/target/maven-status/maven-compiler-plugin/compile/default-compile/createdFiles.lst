@@ -1,1 +1,5 @@
+com\ecommerce\common\entity\Order.class
+com\ecommerce\common\entity\TransactionLog.class
+com\ecommerce\common\entity\TransactionStatus.class
+com\ecommerce\common\entity\Order$OrderStatus.class
 com\ecommerce\common\entity\UserDO.class
